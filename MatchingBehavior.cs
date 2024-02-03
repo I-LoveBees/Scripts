@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MatchingBehavior : MonoBehaviour
 {
     public ID idObj;
+    public UnityEvent matchEvent, noMatchEvent;
     private void OnTriggerEnter(Collider other)
     {
         var tempID = other.GetComponent<IDContainerBehavior>();
@@ -10,9 +12,14 @@ public class MatchingBehavior : MonoBehaviour
             return;
             
         var otherID = tempID.idObj;
+        
         if (idObj == otherID)
         {
-            Debug.Log("Matching ID");
+            matchEvent.Invoke();
+        }
+        else
+        {
+            noMatchEvent.Invoke();
         }
     }
 }
