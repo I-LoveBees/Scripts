@@ -6,6 +6,6 @@ public class ColorIdBehavior : IDContainerBehavior
 
     private void Awake()
     {
-        idObj = colorIdDataListObj.currentColor;
+        idObj = colorIdDataListObj.currentColor; //gets information from the ColorIdDataList script
     }
 }

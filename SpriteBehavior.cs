@@ -19,6 +19,6 @@ public class SpriteBehavior : MonoBehaviour
     public void ChangeRendererColor(ColorIdDataList obj)
     {
         rendererObj.color = obj.currentColor.value;
-        //gets information from the ColorIdDataList script ?
+        //gets information from the ColorIdDataList script
     }
 }

@@ -43,7 +43,7 @@ public class CoroutineBehavior : MonoBehaviour
         endCountEvent.Invoke();
     }
     
-    public void StartRepeatUnilFalse()
+    public void StartRepeatUntilFalse()
     {
         canRun = true;
         StartCoroutine(RepeatUntilFalse());
