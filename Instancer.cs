@@ -39,4 +39,9 @@ public class Instancer : ScriptableObject
         num = Random.Range(0, obj.vector3DList.Count); //randomizes between 0 and the count of vector3DList
         Instantiate(prefab, obj.vector3DList[num].value, Quaternion.identity);
     }
+
+    public void CreateInstanceFromTransform(Transform transform)
+    {
+        Instantiate(prefab, transform.position, Quaternion.identity); //instances at an obj transform
+    }
 }
