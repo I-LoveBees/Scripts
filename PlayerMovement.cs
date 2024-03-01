@@ -1,9 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+
+   // private PlayerControls controls;
+
+
+
+    private void MovePlayer(float horizontalInput)
+    {
+        Vector3 moveDirection = new Vector3(horizontalInput, 0f, 0f);
+        transform.Translate(moveDirection * (moveSpeed * Time.deltaTime));
+    }
+    
     public float moveSpeed = 5f;        // Player movement speed
     public float jumpForce = 7f;        // Force applied when jumping
     public float gravity = -9.81f;      // Gravity applied to the character
@@ -16,6 +28,8 @@ public class PlayerMovement : MonoBehaviour
     {
         // Get the CharacterController component attached to this GameObject
         controller = GetComponent<CharacterController>();
+        //controls = new PlayerControls(); 
+        //controls.Enable();
     }
 
     // Update is called once per frame
@@ -26,10 +40,19 @@ public class PlayerMovement : MonoBehaviour
         var moveH = Input.GetAxis("Horizontal");
         var moveDirection = new Vector3(moveH, 0f, 1f) * moveSpeed;
 
-        //if shift button is pressed, run at twice the speed move speed is set to
-        if (Input.GetKey(KeyCode.LeftShift))
+        // Button press movement
+      //  MovePlayer(controls.Player.MoveLeft.ReadValue<float>() - controls.Player.MoveRight.ReadValue<float>());
+        moveH = 0f;
+
+        // Check if the "LeftButton" is pressed
+        if (Input.GetButton("LeftButton"))
         {
-            moveDirection = new Vector3(moveH, 0f, 1f) * (moveSpeed * 2);
+            moveH = -1f;
+        }
+        // Check if the "RightButton" is pressed
+        else if (Input.GetButton("RightButton"))
+        {
+            moveH = 1f;
         }
 
         // Apply gravity
@@ -40,12 +63,6 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             velocity.y = 0;
-        }
-
-        // Jumping
-        if (controller.isGrounded && Input.GetButtonUp("Jump"))
-        {
-            velocity.y = Mathf.Sqrt(jumpForce * -2 * gravity);
         }
 
         // Apply movement and gravity
