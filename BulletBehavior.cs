@@ -9,6 +9,6 @@ public class BulletBehavior : MonoBehaviour
         // Move the bullet forward
         transform.Translate(Vector3.forward * (speed * Time.deltaTime));
         // Destroy the bullet after 2 seconds
-        Destroy(gameObject, 2);
+        Destroy(gameObject, 1);
     }
 }
