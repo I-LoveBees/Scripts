@@ -1,52 +1,57 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu]
 public class IntData : ScriptableObject
 {
-    public int value;
-    public UnityEvent disableEvent;
+    [SerializeField] public int value, minValue, maxValue;
 
-    public void UpdateValue(int num)
+    [FormerlySerializedAs("minValueEvent")] public UnityEvent<float> valueOutOfRange;
+    [FormerlySerializedAs("updateValueEvent")] public UnityEvent onValueChanged;
+
+    public int Value
     {
-        value += num;
-    }
-    public void SetValue(int num)
-    {
-        value = num;
+        get => value;
+        set
+        {
+            this.value = value;
+            onValueChanged.Invoke();
+            CheckValueRange();
+        }
     }
 
-    public void SetValue(IntData obj)
+    public void UpdateValue(int amount)
     {
-        value = obj.value;
+        Value += amount;
+    }
+
+    public void SetValue(IntData data)
+    {
+        Value = data.Value;
     }
     
-    public void CompareValue(IntData obj)
+    public void SetValue(int data)
     {
-        if (value >= obj.value)
-        {
-            //if value is les than obj value, don't do anything
-        }
-        else
-        {
-            value = obj.value;
-        }
+        Value = data;
+    }
+    
+    public void IncrementValue()
+    {
+        value++;
+        onValueChanged.Invoke();
     }
 
-    public void DisplayImage(Image img)
+    public void CheckValueRange()
     {
-        img.fillAmount = value;
+        if (Value >= minValue && Value <= maxValue) return;
+        valueOutOfRange.Invoke(Value);
+        Value = Mathf.Clamp(Value, minValue, maxValue);
     }
 
-    public void DisplayNumber(Text txt)
+    public void UpdateValueZeroCheck(int i)
     {
-        txt.text = value.ToString();
-    }
-
-    private void OnDisable()
-    {
-        disableEvent.Invoke();
+        if (Value + i < 0) return;
+        Value += i;
     }
 }

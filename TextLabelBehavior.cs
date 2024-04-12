@@ -24,4 +24,6 @@ public class TextLabelBehavior : MonoBehaviour
     {
         label.text = obj.value.ToString(CultureInfo.InvariantCulture);      
     }
+
+
 }
