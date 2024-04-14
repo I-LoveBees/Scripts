@@ -6,7 +6,7 @@ public class PlayerJoystickControl : MonoBehaviour
 {
     public float moveSpeed;        // Player movement speed
     
-    private CharacterController controller;  // The character controller component
+    private Rigidbody controller;  // The character controller component
     private Vector3 velocity;               // Current velocity of the character
 
     public Joystick joystick;
@@ -15,7 +15,7 @@ public class PlayerJoystickControl : MonoBehaviour
     private void Awake()
     {
         // Get the CharacterController component attached to this GameObject
-        controller = GetComponent<CharacterController>();
+        controller = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -24,17 +24,18 @@ public class PlayerJoystickControl : MonoBehaviour
         // wasd movement
 
         var moveH = joystick.Horizontal;
-        var moveDirection =  new Vector3(moveH, 0f, 0f) * moveSpeed;
+        var moveV = joystick.Vertical;
+        var moveDirection =  new Vector3(moveH, 0f, moveV) * moveSpeed;
 
         //if shift button is pressed, run at twice the speed move speed is set to
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            moveDirection = new Vector3(moveH, 0f, 0f) * (moveSpeed * 2);
+            moveDirection = new Vector3(moveH, 0f, moveV) * (moveSpeed * 2);
         }
 
         // Apply movement and gravity do i need this?
         var move = moveDirection + velocity;
-        controller.Move(move * Time.deltaTime);
+        controller.velocity = move;
         
     }
 
