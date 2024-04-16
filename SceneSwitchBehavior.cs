@@ -5,7 +5,7 @@ public class SceneSwitchBehavior : MonoBehaviour
 {
     public string sceneName;
     
-    private void SwitchScene()
+    public void SwitchScene()
     {
         SceneManager.LoadScene(sceneName);
     }
