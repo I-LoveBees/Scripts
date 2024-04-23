@@ -7,12 +7,7 @@ using UnityEngine.UI;
 public class IntData : ScriptableObject
 {
     public int value;
-    public UnityEvent disableEvent;
-
-    public void UpdateValue(int num)
-    {
-        value += num;
-    }
+    public UnityEvent disableEvent,onZeroEvent;
 
     public void SetValue(int num)
     {
@@ -22,6 +17,11 @@ public class IntData : ScriptableObject
     public void SetValue(IntData obj)
     {
         value = obj.value;
+    }
+    
+    public void UpdateValue(int num)
+    {
+        value += num;
     }
 
     public void CompareValue(IntData obj)
@@ -33,6 +33,18 @@ public class IntData : ScriptableObject
         else
         {
             value = obj.value;
+        }
+    }
+    
+    public void CompareValue(int num)
+    {
+        if (value >= num)
+        {
+            //if value is les than num value, don't do anything
+        }
+        else
+        {
+            value = num;
         }
     }
 
@@ -50,4 +62,5 @@ public class IntData : ScriptableObject
     {
         disableEvent.Invoke();
     }
+    
 }
