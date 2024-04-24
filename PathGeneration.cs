@@ -2,18 +2,23 @@ using UnityEngine;
 
 public class PathGeneration : MonoBehaviour
 {
-    //create copy of ground and wall prefabs
-    //put it in front of the previous ground and walls
-    
-    public GameObject groundPrefab, wallPrefab;
-    public int pathLength;
+    public GameObject[] pathPieces;
 
-    private void Start()
+    public Transform thresholdPoint;
+
+    void Update()
     {
-        for (int i = 0; i < pathLength; i++)
+        if (transform.position.z < thresholdPoint.position.z)
         {
-            Instantiate(groundPrefab, new Vector3(i, 0, 0), Quaternion.identity);
-            Instantiate(wallPrefab, new Vector3(i, 1, 0), Quaternion.identity);
+            //copy the path piece & move forward
+            //Instantiate(pathPiece, new Vector3(0, 0, transform.position.z + 10), Quaternion.identity);
+            //Instantiate(pathPieces, transform.position, transform.rotation);
+            //transform.position += new Vector3(0, 0, 2.1f);
+
+            //randomly select a path piece and generate it
+            int randomIndex = Random.Range(0, pathPieces.Length);
+            Instantiate(pathPieces[randomIndex], transform.position, transform.rotation);
+            transform.position += new Vector3(0, 0, 2.1f);
         }
     }
 }
