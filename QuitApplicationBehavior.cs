@@ -6,6 +6,6 @@ public class QuitApplicationBehavior : MonoBehaviour
         // Quit the application
         Application.Quit();
         //for in editor mode
-        UnityEditor.EditorApplication.isPlaying = false;
+        //UnityEditor.EditorApplication.isPlaying = false;
     }
 }
