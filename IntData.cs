@@ -1,57 +1,66 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 [CreateAssetMenu]
 public class IntData : ScriptableObject
 {
-    [SerializeField] public int value, minValue, maxValue;
+    public int value;
+    public UnityEvent disableEvent,onZeroEvent;
 
-    [FormerlySerializedAs("minValueEvent")] public UnityEvent<float> valueOutOfRange;
-    [FormerlySerializedAs("updateValueEvent")] public UnityEvent onValueChanged;
-
-    public int Value
+    public void SetValue(int num)
     {
-        get => value;
-        set
+        value = num;
+    }
+
+    public void SetValue(IntData obj)
+    {
+        value = obj.value;
+    }
+    
+    public void UpdateValue(int num)
+    {
+        value += num;
+    }
+
+    public void CompareValue(IntData obj)
+    {
+        if (value >= obj.value)
         {
-            this.value = value;
-            onValueChanged.Invoke();
-            CheckValueRange();
+            //if value is les than obj value, don't do anything
+        }
+        else
+        {
+            value = obj.value;
+        }
+    }
+    
+    public void CompareValue(int num)
+    {
+        if (value >= num)
+        {
+            //if value is les than num value, don't do anything
+        }
+        else
+        {
+            value = num;
         }
     }
 
-    public void UpdateValue(int amount)
+    public void DisplayImage(Image img)
     {
-        Value += amount;
+        img.fillAmount = value;
     }
 
-    public void SetValue(IntData data)
+    public void DisplayNumber(Text txt)
     {
-        Value = data.Value;
+        txt.text = value.ToString();
+    }
+
+    private void OnDisable()
+    {
+        disableEvent.Invoke();
     }
     
-    public void SetValue(int data)
-    {
-        Value = data;
-    }
-    
-    public void IncrementValue()
-    {
-        value++;
-        onValueChanged.Invoke();
-    }
-
-    public void CheckValueRange()
-    {
-        if (Value >= minValue && Value <= maxValue) return;
-        valueOutOfRange.Invoke(Value);
-        Value = Mathf.Clamp(Value, minValue, maxValue);
-    }
-
-    public void UpdateValueZeroCheck(int i)
-    {
-        if (Value + i < 0) return;
-        Value += i;
-    }
 }

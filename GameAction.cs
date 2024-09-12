@@ -4,10 +4,36 @@ using UnityEngine.Events;
 [CreateAssetMenu]
 public class GameAction : ScriptableObject
 {
-    public UnityAction raise;
-
+    public UnityAction<object> raise;
+    public UnityAction raiseNoArgs;
+    
+    
     public void RaiseAction()
     {
-        raise?.Invoke(); //question mark is a null check
+        raiseNoArgs?.Invoke();
+    }
+    public void RaiseAction(object obj)
+    {
+        raise?.Invoke(obj);
+    }
+
+    public void RaiseAction(float obj)
+    {
+        raise?.Invoke(obj);
+    }
+    
+    public void RaiseAction(int obj)
+    {
+        raise?.Invoke(obj);
+    }
+
+    public void RaiseAction(Transform obj)
+    {
+        raise?.Invoke(obj);
+    }
+    
+    public void RaiseAction(GameObject obj)
+    {
+        raise?.Invoke(obj);
     }
 }

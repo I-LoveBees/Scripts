@@ -1,17 +1,44 @@
 using UnityEngine;
 using UnityEngine.Events;
+using System.Collections;
 
 public class GameActionHandler : MonoBehaviour
 {
-    public GameAction gameActionObj;
-    public UnityEvent onRaiseEvent;
+    public GameAction action;
+    public UnityEvent startEvent, respondEvent, respondLateEvent, runInAnimatorEvent;
+    public float holdTime = 0.1f;
+    private WaitForSeconds waitObj;
+
     private void Start()
     {
-        gameActionObj.raise += Raise;
+        startEvent.Invoke();
     }
-    
-    private void Raise()
+
+    private void OnEnable()
     {
-        onRaiseEvent.Invoke();
+        waitObj = new WaitForSeconds(holdTime);
+        action.raiseNoArgs += Respond;
+    }
+
+    private void Respond()
+    {
+        respondEvent.Invoke();
+        StartCoroutine(RespondLate());
+    }
+
+    private IEnumerator RespondLate()
+    {
+        yield return waitObj;
+        respondLateEvent.Invoke();
+    }
+
+    private void RunFromAnimator()
+    {
+        runInAnimatorEvent.Invoke();
+    }
+
+    private void OnDestroy()
+    {
+        action.raiseNoArgs = null;
     }
 }
