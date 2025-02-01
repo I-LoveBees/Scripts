@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerJoystickControl : MonoBehaviour
 {
+    /*
     public float moveSpeed;        // Player movement speed
     
     private Rigidbody controller;  // The character controller component
@@ -38,5 +39,5 @@ public class PlayerJoystickControl : MonoBehaviour
         controller.velocity = move;
         
     }
-
+*/
 }
